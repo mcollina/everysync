@@ -1,0 +1,11 @@
+{
+  "name": "everysync",
+  "version": "0.0.1",
+  "description": "Make all API sync",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test"
+  },
+  "author": "Matteo Collina <hello@matteocollina.com>",
+  "license": "MIT"
+}
