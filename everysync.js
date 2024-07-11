@@ -29,10 +29,7 @@ class EverySync extends EventEmitter {
     })
 
     const res = Atomics.wait(this._metaView, 0, 0, 1000)
-    console.log('data in atomics', Atomics.load(this._metaView, 0))
     Atomics.store(this._metaView, 0, 0)
-
-    console.log(res)
 
     if (res === 'ok') {
       const obj = read(this._data)
