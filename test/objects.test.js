@@ -14,6 +14,20 @@ test('mirror test', () => {
   assert.deepEqual(obj, obj2)
 })
 
+test('mirror test with offset', () => {
+  const obj = { foo: 'bar' }
+  const buffer = new SharedArrayBuffer(1024)
+  write(buffer, obj, 4)
+  const obj2 = read(buffer, 4)
+  assert.deepEqual(obj, obj2)
+})
+
+test('grow a non-growable buffer', () => {
+  const obj = { foo: 'bar' }
+  const buffer = new SharedArrayBuffer(10)
+  assert.throws(() => write(buffer, obj))
+})
+
 test('growable', { skip: !hasGrowable }, () => {
   const obj = { foo: 'bar' }
   const buffer = new SharedArrayBuffer(2, {
@@ -21,14 +35,6 @@ test('growable', { skip: !hasGrowable }, () => {
   })
   write(buffer, obj)
   const obj2 = read(buffer)
-  assert.deepEqual(obj, obj2)
-})
-
-test('mirror test with offset', () => {
-  const obj = { foo: 'bar' }
-  const buffer = new SharedArrayBuffer(1024)
-  write(buffer, obj, 4)
-  const obj2 = read(buffer, 4)
   assert.deepEqual(obj, obj2)
 })
 

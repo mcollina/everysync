@@ -7,10 +7,11 @@ const {
   TO_WORKER,
 } = require('./lib/indexes')
 
-function makeSync (data) {
+function makeSync (data, opts = {}) {
+  const timeout = opts.timeout || 1000
   const metaView = new Int32Array(data)
 
-  const res = Atomics.wait(metaView, TO_WORKER, 0, 1000)
+  const res = Atomics.wait(metaView, TO_WORKER, 0, timeout)
   Atomics.store(metaView, TO_WORKER, 0)
 
   if (res === 'ok') {
@@ -22,20 +23,20 @@ function makeSync (data) {
         write(data, { key, args }, OFFSET)
         Atomics.store(metaView, TO_MAIN, 1)
         Atomics.notify(metaView, TO_MAIN, 1)
-        const res = Atomics.wait(metaView, TO_WORKER, 0)
+        const res = Atomics.wait(metaView, TO_WORKER, 0, timeout)
         Atomics.store(metaView, TO_WORKER, 0)
         if (res === 'ok') {
           const obj = read(data, OFFSET)
           return obj
         } else {
-          throw new Error('Worker failed to respond')
+          throw new Error(`The response timed out after ${timeout}ms`)
         }
       }
     }
 
     return api
   } else {
-    throw new Error('Worker failed to initialize')
+    throw new Error(`The initialization timed out after ${timeout}ms`)
   }
 }
 
