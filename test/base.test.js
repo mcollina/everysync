@@ -3,10 +3,10 @@
 const { test } = require('node:test')
 const { join } = require('node:path')
 const assert = require('node:assert/strict')
-const { EverySync } = require('..')
+const { EverySyncWorker } = require('..')
 
 test('make a async function sync', async (t) => {
-  const everysync = new EverySync({
+  const everysync = new EverySyncWorker({
     module: join(__dirname, 'fixtures', 'foo.mjs'),
   })
 

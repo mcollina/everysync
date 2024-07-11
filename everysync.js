@@ -10,7 +10,7 @@ const {
   TO_WORKER
 } = require('./lib/indexes')
 
-class EverySync extends EventEmitter {
+class EverySyncWorker extends EventEmitter {
   constructor({ module, maxByteLength }) { 
     super()
     // First 64 bytes are reserved for metadata
@@ -67,4 +67,4 @@ class EverySync extends EventEmitter {
   }
 }
 
-module.exports.EverySync = EverySync
+module.exports.EverySyncWorker = EverySyncWorker
