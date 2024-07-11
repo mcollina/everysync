@@ -6,5 +6,3 @@ wire(workerData.data, {
     return arg
   },
 })
-
-

@@ -7,7 +7,7 @@ const EventEmitter = require('node:events')
 const {
   OFFSET,
   TO_MAIN,
-  TO_WORKER
+  TO_WORKER,
 } = require('./lib/indexes')
 
 function makeSync (data) {
@@ -66,7 +66,7 @@ async function wire (data, obj) {
 }
 
 class EverySyncWorker extends EventEmitter {
-  constructor({ module, maxByteLength }) { 
+  constructor ({ module, maxByteLength }) {
     super()
     // First 64 bytes are reserved for metadata
     this._data = new SharedArrayBuffer(1024, {

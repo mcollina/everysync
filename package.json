@@ -4,8 +4,12 @@
   "description": "Make all API sync",
   "main": "everysync.js",
   "scripts": {
-    "test": "node --test test/*.test.js"
+    "test": "eslint && node --test test/*.test.js"
   },
   "author": "Matteo Collina <hello@matteocollina.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^9.6.0",
+    "neostandard": "^0.11.0"
+  }
 }
