@@ -4,19 +4,7 @@ const { test } = require('node:test')
 const { join } = require('node:path')
 const assert = require('node:assert/strict')
 const { Worker } = require('node:worker_threads')
-const { EverySyncWorker, makeSync } = require('..')
-
-test('make a async function sync', async (t) => {
-  const everysync = new EverySyncWorker({
-    module: join(__dirname, 'fixtures', 'foo.mjs'),
-  })
-
-  t.after(() => {
-    everysync.terminate()
-  })
-
-  assert.strictEqual(everysync.api.foo(), 'foo')
-})
+const { makeSync } = require('..')
 
 test('makeSync and wire', async (t) => {
   const buffer = new SharedArrayBuffer(1024, {

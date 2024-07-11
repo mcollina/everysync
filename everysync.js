@@ -1,9 +1,6 @@
 'use strict'
 
-const { Worker } = require('node:worker_threads')
-const { join } = require('node:path')
 const { read, write } = require('./lib/objects')
-const EventEmitter = require('node:events')
 const {
   OFFSET,
   TO_MAIN,
@@ -65,32 +62,5 @@ async function wire (data, obj) {
   }
 }
 
-class EverySyncWorker extends EventEmitter {
-  constructor ({ module, maxByteLength }) {
-    super()
-    // First 64 bytes are reserved for metadata
-    this._data = new SharedArrayBuffer(1024, {
-      maxByteLength: maxByteLength || 64 * 1024 * 1024, // 64MB
-    })
-    this.worker = new Worker(join(__dirname, 'lib', 'worker.js'), {
-      workerData: {
-        module,
-        data: this._data,
-      },
-    })
-
-    this.worker.on('error', (err) => {
-      this.emit('error', err)
-    })
-
-    this.api = makeSync(this._data)
-  }
-
-  terminate () {
-    this.worker.terminate()
-  }
-}
-
 module.exports.makeSync = makeSync
 module.exports.wire = wire
-module.exports.EverySyncWorker = EverySyncWorker

@@ -4,11 +4,12 @@
   "description": "Make all API sync",
   "main": "everysync.js",
   "scripts": {
-    "test": "eslint && node --test test/*.test.js"
+    "test": "eslint && c8 node --test test/*.test.js"
   },
   "author": "Matteo Collina <hello@matteocollina.com>",
   "license": "MIT",
   "devDependencies": {
+    "c8": "^10.1.2",
     "eslint": "^9.6.0",
     "neostandard": "^0.11.0"
   }
