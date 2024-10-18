@@ -6,3 +6,6 @@ wire(workerData.data, {
     return arg
   },
 })
+
+// Keep the event loop alive
+setInterval(() => {}, 100000)

@@ -50,10 +50,7 @@ async function wire (data, obj) {
 
   while (true) {
     const waitAsync = Atomics.waitAsync(metaView, TO_MAIN, 0)
-    let res
-    if (waitAsync.async) {
-      res = await waitAsync.value
-    }
+    const res = await waitAsync.value
     Atomics.store(metaView, TO_MAIN, 0)
 
     if (res === 'ok') {

@@ -47,6 +47,9 @@ wire(workerData.data, {
     return value
   },
 })
+
+// Keep the event loop alive
+setInterval(() => {}, 100000)
 ```
 
 ## License
