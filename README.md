@@ -13,15 +13,15 @@ npm install everysync
 Caller side:
 
 ```javascript
-const { join } = require('node:path')
-const assert = require('node:assert')
-const { Worker } = require('node:worker_threads')
-const { makeSync } = require('everysync')
+import { join } from 'node:path'
+import { strictEqual } from 'node:assert'
+import { Worker } from 'node:worker_threads'
+import { makeSync } from 'everysync'
 
 const buffer = new SharedArrayBuffer(1024, {
   maxByteLength: 64 * 1024 * 1024,
 })
-const worker = new Worker(join(__dirname, 'echo.mjs'), {
+const worker = new Worker(join(import.meta.dirname, 'echo.mjs'), {
   workerData: {
     data: buffer,
   },
@@ -29,7 +29,7 @@ const worker = new Worker(join(__dirname, 'echo.mjs'), {
 
 const api = makeSync(buffer)
 
-assert.strictEqual(api.echo(42), 42)
+strictEqual(api.echo(42), 42)
 
 worker.terminate()
 ```
